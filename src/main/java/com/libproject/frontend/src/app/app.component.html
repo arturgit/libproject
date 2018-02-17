@@ -1,7 +1,7 @@
 <div>
   <tabset>
 
-    <tab heading="Create">
+    <tab heading="Create Book">
       <form>
         <div class="form-group">
           <label for="name-input">Name:</label>
@@ -11,11 +11,11 @@
           <label for="author-input">Author:</label>
           <input type='text'class="form-control" name="author-input" [(ngModel)]="author"/>
         </div>
-        <button (click)="create()">Create</button>
+        <button (click)="createBook()">Create</button>
       </form>                    
     </tab>
 
-    <tab heading="Search">
+    <tab heading="Search Books" (select)="books = []">
       <form>
         <div class="form-group">
           <label for="search-input">Search String:</label>
@@ -45,5 +45,77 @@
         
     </tab>
 
+
+    <tab heading="Create Employee">
+      <form>
+        <div class="form-group">
+          <label for="first-name-input">First Name:</label>
+          <input type='text'class="form-control" name="first-name-input" [(ngModel)]="firstname"/>
+        </div>
+        <div class="form-group">
+          <label for="last-name-input">Last Name:</label>
+          <input type='text'class="form-control" name="last-name-input" [(ngModel)]="lastname"/>
+        </div>
+        <button (click)="createEmployee()">Create</button>
+      </form>                    
+    </tab>
+
+    <tab heading="Employees" (select)="search()">
+      
+      <div *ngIf="selectedEmployee; else notSelectedTemplate" >
+        <button (click)="selectedEmployee = null">To List</button>
+        <p> ID: {{selectedEmployee.id}} </p> 
+        <p> FIRSTNAME: {{selectedEmployee.firstname}} </p>
+        <p> LASTNAME: {{selectedEmployee.lastname}} </p>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>NAME</th>
+              <th>AUTHOR</th>
+              <th>READ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let book of books">
+              <td>{{book.id}}</td>
+              <td>{{book.name}}</td>
+              <td>{{book.author}}</td>
+              <td>
+                <input 
+                  type="checkbox" 
+                  [value]="employeeBooks.has(book)" 
+                  (change)="selectEBook(employeeBooks.has(book), book)" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>  
+      
+      <ng-template #notSelectedTemplate>
+        <button (click)="loadEmployees()">Load</button>
+        
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>FIRSTNAME</th>
+              <th>LASTNAME</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let employee of employees" (click)="selectEmployee(employee)">
+              <td>{{employee.id}}</td>
+              <td>{{employee.firstname}}</td>
+              <td>{{employee.lastname}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-template>
+
+    </tab>
+
   </tabset>
+
 </div>
