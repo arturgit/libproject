@@ -16,33 +16,58 @@
     </tab>
 
     <tab heading="Search Books" (select)="books = []">
-      <form>
-        <div class="form-group">
-          <label for="search-input">Search String:</label>
-          <input type='text'class="form-control" name="search-input" [(ngModel)]="searchString"/>
-        </div>
-        <button (click)="search()">Get All</button>
-        <button (click)="searchByName()">Search by name</button>
-        <button (click)="searchByAuthor()">Search by author</button>
-      </form>
+      <ng-template [ngIf]="!selectedBook" [ngIfElse]="bookInfo">
+        <form>
+          <div class="form-group">
+            <label for="search-input">Search String:</label>
+            <input type='text'class="form-control" name="search-input" [(ngModel)]="searchString"/>
+          </div>
+          <button (click)="search()">Get All</button>
+          <button (click)="searchByName()">Search by name</button>
+          <button (click)="searchByAuthor()">Search by author</button>
+        </form>
 
-      <table class="table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>NAME</th>
-            <th>AUTHOR</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let book of books">
-            <td>{{book.id}}</td>
-            <td>{{book.name}}</td>
-            <td>{{book.author}}</td>
-          </tr>
-        </tbody>
-      </table>
-        
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>NAME</th>
+              <th>AUTHOR</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let book of books" (click)="selectBook(book)">
+              <td>{{book.id}}</td>
+              <td>{{book.name}}</td>
+              <td>{{book.author}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-template>
+
+      <ng-template #bookInfo>
+        <button (click)="selectedBook = null">To List</button>
+        <p> ID: {{selectedBook.id}} </p> 
+        <p> NAME: {{selectedBook.name}} </p>
+        <p> AUTHOR: {{selectedBook.author}} </p>
+        <h3>Already read:</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>FIRSTNAME</th>
+              <th>LASTNAME</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let employee of bookEmployees">
+              <td>{{employee.id}}</td>
+              <td>{{employee.firstname}}</td>
+              <td>{{employee.lastname}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-template>
     </tab>
 
 
@@ -60,7 +85,7 @@
       </form>                    
     </tab>
 
-    <tab heading="Employees" (select)="search()">
+    <tab heading="Employees" (select)="search();loadEmployees()">
       
       <div *ngIf="selectedEmployee; else notSelectedTemplate" >
         <button (click)="selectedEmployee = null">To List</button>
@@ -78,15 +103,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let book of books">
-              <td>{{book.id}}</td>
-              <td>{{book.name}}</td>
-              <td>{{book.author}}</td>
+            <tr *ngFor="let bookWrapper of employeeBooks">
+              <td>{{bookWrapper.book.id}}</td>
+              <td>{{bookWrapper.book.name}}</td>
+              <td>{{bookWrapper.book.author}}</td>
               <td>
                 <input 
                   type="checkbox" 
-                  [value]="employeeBooks.has(book)" 
-                  (change)="selectEBook(employeeBooks.has(book), book)" />
+                  [(ngModel)]="bookWrapper.selected" 
+                  (change)="selectEBook(bookWrapper)" />
               </td>
             </tr>
           </tbody>
@@ -94,8 +119,6 @@
       </div>  
       
       <ng-template #notSelectedTemplate>
-        <button (click)="loadEmployees()">Load</button>
-        
         <table class="table">
           <thead>
             <tr>

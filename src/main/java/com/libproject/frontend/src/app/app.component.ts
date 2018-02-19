@@ -3,6 +3,7 @@ import { ServerHttp } from './core/server-http.service';
 import { Book } from './core/book';
 import { Response } from '@angular/http/src/static_response';
 import { Employee } from './core/employee';
+import { BookWrapper } from './core/book-wrapper';
 
 @Component({
   selector: 'app-root',
@@ -16,17 +17,23 @@ export class AppComponent {
   public readonly createBookUrl = 'book';
   public readonly createEmployeeUrl = 'employee';
   public readonly getAllEmployeesUrl = 'employee';
-  public readonly loadEBookUrl = '';
+  public readonly loadEBookUrl = 'books/';
+  public readonly selectEBookUrl = 'selectbook/';
 
   public searchString: string;
   public name: string;
   public author: string;
+
   public books: Book[] = [];
+  public selectedBook: Book;
+  public bookEmployees: Employee[] = [];
+
   public firstname: string;
   public lastname: string;
+  
   public employees: Employee[] = [];
   public selectedEmployee: Employee = null;
-  public employeeBooks: Set<Book> = new Set();
+  public employeeBooks: BookWrapper[] = [];
 
   constructor(
     private serverHttp: ServerHttp
@@ -78,18 +85,26 @@ export class AppComponent {
 
   public selectEmployee(employee: Employee): void {
     this.selectedEmployee = employee;
-    this.employeeBooks = new Set<Book>();
-    // this.serverHttp.get(this.loadEBookUrl)
-    //     .subscribe((resp: any) => {
-    //       this.employeeBooks = new Set(resp);
-    //     });
+    this.employeeBooks = this.books.map((book: Book) => new BookWrapper(book));
+    this.serverHttp.get(this.loadEBookUrl + employee.id)
+        .subscribe((resp: any[]) => {
+          resp.forEach((bookDTO: Book) => {
+            let bookWrapper = this.employeeBooks
+                .find((bookWrapper: BookWrapper) => bookWrapper.book.id === bookDTO.id);
+            bookWrapper.selected = true;
+          });
+          this.employeeBooks = [...this.employeeBooks];
+        });
   } 
 
-  public selectEBook(current: boolean, book: Book): void {
-    console.log(current, book);
-    current
-      ? this.employeeBooks.delete(book)
-      : this.employeeBooks.add(book);
+  public selectEBook(bookWrapper: BookWrapper): void {
+    let url = this.selectEBookUrl + this.selectedEmployee.id + '/' + bookWrapper.book.id;
+    this.serverHttp.get(url).subscribe();
   }
 
+  public selectBook(book): void {
+    this.selectedBook = book;
+    this.serverHttp.get('book/'+book.id+'/employees')
+        .subscribe((empl: Employee[]) => this.bookEmployees = empl);
+  }
 }

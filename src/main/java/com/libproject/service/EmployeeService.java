@@ -1,5 +1,6 @@
 package com.libproject.service;
 
+import com.libproject.model.Book;
 import com.libproject.model.Employee;
 import org.springframework.stereotype.Service;
 
@@ -11,8 +12,13 @@ import java.util.List;
 @Service
 public interface EmployeeService {
 
-    public Long saveEmployee(String firstname, String lastname);
+    Long saveEmployee(String firstname, String lastname);
 
-    public List<Employee> getAll();
+    List<Employee> getAll();
 
+    List<Book> getBooksOfEmployee(Long id);
+
+    boolean changeBookState(Long employeeId, Long bookId);
+
+    List<Employee> getEmployeeHowReadBook(Long id);
 }

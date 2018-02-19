@@ -17,7 +17,6 @@ import java.util.List;
 public class LibController
 {
     private BookService bookService;
-
     private EmployeeService employeeService;
 
     @Autowired
@@ -54,6 +53,21 @@ public class LibController
     @PostMapping("employee")
     public Long createEmployee(@RequestBody Employee employee) {
         return this.employeeService.saveEmployee(employee.getFirstname(), employee.getLastname());
+    }
+
+    @GetMapping("books/{employeeId}")
+    public List<Book> getBooksOfEmployee(@PathVariable("employeeId") Long employeeId) {
+        return this.employeeService.getBooksOfEmployee(employeeId);
+    }
+
+    @GetMapping("selectbook/{employeeId}/{bookId}")
+    public boolean selectBook(@PathVariable("employeeId") Long employeeId, @PathVariable("bookId") Long bookId) {
+        return this.employeeService.changeBookState(employeeId, bookId);
+    }
+
+    @GetMapping("book/{id}/employees")
+    public List<Employee> getEmployeeReadBook(@PathVariable("id") Long id) {
+        return this.employeeService.getEmployeeHowReadBook(id);
     }
 
 }

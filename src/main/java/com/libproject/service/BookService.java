@@ -11,12 +11,12 @@ import java.util.List;
 @Service
 public interface BookService {
 
-    public Long createBook(String name, String author);
+    Long createBook(String name, String author);
 
-    public List<Book> getAll();
+    List<Book> getAll();
 
-    public List<Book> getBooksByName(String name);
+    List<Book> getBooksByName(String name);
 
-    public List<Book> getBooksByAuthor(String author);
+    List<Book> getBooksByAuthor(String author);
 
 }
