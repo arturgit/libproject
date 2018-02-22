@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { ServerHttp } from './server-http.service';
+import { AuthService } from './auth.service';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import { ServerHttp } from './server-http.service';
     HttpModule
   ],
   providers: [
-    ServerHttp
+    ServerHttp,
+    AuthService
   ],
   exports: [
     FormsModule,

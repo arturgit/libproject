@@ -1,0 +1,28 @@
+.navbar-right {
+    padding-right: 10px; 
+}
+
+.bottom-buttons {
+    text-align: center;
+}
+
+form {
+    margin-top: 10px; 
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.book-info {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.info-list {
+    margin-top: 20px; 
+}
+
+.notSelectedTemplate {
+    margin-top: 20px;   
+}

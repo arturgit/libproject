@@ -1,0 +1,205 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Lib Project</a>
+    </div>
+    <div class="navbar-right">
+      <button type="button" class="btn btn-default navbar-btn">Logout</button>
+    </div>
+  </div>
+</nav>
+
+<div class="col-xs-12">
+        <tabset>
+      
+          <tab heading="Create Book">
+            <form>
+              <div class="form-group">
+                <label for="name-input">Name:</label>
+                <input type='text'class="form-control" name="name-input" [(ngModel)]="name"/>
+              </div>
+              <div class="form-group">
+                <label for="author-input">Author:</label>
+                <input type='text'class="form-control" name="author-input" [(ngModel)]="author"/>
+              </div>
+              <div class="bottom-buttons">
+                <button 
+                    type="button" 
+                    class="btn btn-primary" 
+                    (click)="createBook()"
+                    [disabled]="!name || !author">
+                  Create
+                </button>
+              </div>
+            </form>                    
+          </tab>
+      
+          <tab heading="Search Books" (select)="books = []">
+            <ng-template [ngIf]="!selectedBook" [ngIfElse]="bookInfo">
+              <form>
+                <div class="form-group">
+                  <label for="search-input">Search String:</label>
+                  <input type='text'class="form-control" name="search-input" [(ngModel)]="searchString"/>
+                </div>
+                <button type="button" class="btn btn-secondary" (click)="search()">Get All</button>
+                <button type="button" class="btn btn-secondary" (click)="searchByName()">Search by name</button>
+                <button type="button" class="btn btn-secondary" (click)="searchByAuthor()">Search by author</button>
+              </form>
+      
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>NAME</th>
+                    <th>AUTHOR</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let book of books" (click)="selectBook(book)" class="clickable">
+                    <td>{{book.id}}</td>
+                    <td>{{book.name}}</td>
+                    <td>{{book.author}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </ng-template>
+      
+            <ng-template #bookInfo>
+              <div class="book-info">
+                <button type="button" class="btn btn-default" (click)="selectedBook = null">Back To List</button>
+                <div class="info-list">
+                  <table class="table table-bordered">
+                    <tbody>
+                      <tr>
+                        <td>ID</td>
+                        <td class="col-xs-6">{{selectedBook.id}}</td>
+                      </tr>
+                      <tr>
+                        <td>NAME</td>
+                        <td>{{selectedBook.name}}</td>
+                      </tr>
+                      <tr>
+                        <td>AUTHOR</td>
+                        <td>{{selectedBook.author}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <h3>Already read:</h3>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>FIRSTNAME</th>
+                    <th>LASTNAME</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let employee of bookEmployees">
+                    <td>{{employee.id}}</td>
+                    <td>{{employee.firstname}}</td>
+                    <td>{{employee.lastname}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </ng-template>
+          </tab>
+      
+      
+          <tab heading="Create Employee">
+            <form>
+              <div class="form-group">
+                <label for="first-name-input">First Name:</label>
+                <input type='text'class="form-control" name="first-name-input" [(ngModel)]="firstname"/>
+              </div>
+              <div class="form-group">
+                <label for="last-name-input">Last Name:</label>
+                <input type='text'class="form-control" name="last-name-input" [(ngModel)]="lastname"/>
+              </div>
+              <div class="bottom-buttons">
+                <button 
+                    type="button" 
+                    class="btn btn-primary" 
+                    (click)="createEmployee()"
+                    [disabled]="!firstname || !lastname">
+                  Create
+                </button>
+              </div>
+            </form>                    
+          </tab>
+      
+          <tab heading="Employees" (select)="search();loadEmployees()">
+            
+            <div *ngIf="selectedEmployee; else notSelectedTemplate">
+              <div class="book-info">
+                <button type="button" class="btn btn-default" (click)="selectedEmployee = null">Back To List</button>
+                <div class="info-list">
+                  <table class="table table-bordered">
+                    <tbody>
+                      <tr>
+                        <td>ID</td>
+                        <td class="col-xs-6">{{selectedEmployee.id}}</td>
+                      </tr>
+                      <tr>
+                        <td>FIRSTNAME</td>
+                        <td>{{selectedEmployee.firstname}}</td>
+                      </tr>
+                      <tr>
+                        <td>LASTNAME</td>
+                        <td>{{selectedEmployee.lastname}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>NAME</th>
+                    <th>AUTHOR</th>
+                    <th>READ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let bookWrapper of employeeBooks">
+                    <td>{{bookWrapper.book.id}}</td>
+                    <td>{{bookWrapper.book.name}}</td>
+                    <td>{{bookWrapper.book.author}}</td>
+                    <td>
+                      <input 
+                        type="checkbox" 
+                        [(ngModel)]="bookWrapper.selected" 
+                        (change)="selectEBook(bookWrapper)" />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>  
+            
+            <ng-template #notSelectedTemplate>
+              <table class="table table-hover notSelectedTemplate">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>FIRSTNAME</th>
+                    <th>LASTNAME</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let employee of employees" (click)="selectEmployee(employee)" class="clickable">
+                    <td>{{employee.id}}</td>
+                    <td>{{employee.firstname}}</td>
+                    <td>{{employee.lastname}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </ng-template>
+      
+          </tab>
+      
+        </tabset>
+      
+      </div>

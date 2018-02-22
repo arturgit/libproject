@@ -7,10 +7,14 @@ import { TabsModule } from 'ngx-bootstrap';
 
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
+import { MainComponent } from './main/main.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MainComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
