@@ -13,6 +13,10 @@ export class LoginComponent {
     ) {}
 
     public login(): void {
-        this.authService.login();
+        this.authService.login('a', 'b');
+    }
+
+    public reg(): void {
+        this.authService.reg('a', 'b');
     }
 }

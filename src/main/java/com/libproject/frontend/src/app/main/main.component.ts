@@ -11,14 +11,14 @@ import { BookWrapper } from '../core/book-wrapper';
   styleUrls: ['./main.component.css']
 })
 export class MainComponent {
-  public readonly getAllUrl = 'lib';
-  public readonly getByNameUrl = 'getBooksByName';
-  public readonly getByAuthorUrl = 'getBooksByAuthor';
-  public readonly createBookUrl = 'book';
-  public readonly createEmployeeUrl = 'employee';
-  public readonly getAllEmployeesUrl = 'employee';
-  public readonly loadEBookUrl = 'books/';
-  public readonly selectEBookUrl = 'selectbook/';
+  public readonly getAllUrl = 'lib/lib';
+  public readonly getByNameUrl = 'lib/getBooksByName';
+  public readonly getByAuthorUrl = 'lib/getBooksByAuthor';
+  public readonly createBookUrl = 'lib/book';
+  public readonly createEmployeeUrl = 'lib/employee';
+  public readonly getAllEmployeesUrl = 'lib/employee';
+  public readonly loadEBookUrl = 'lib/books/';
+  public readonly selectEBookUrl = 'lib/selectbook/';
 
   public searchString: string;
   public name: string;
@@ -30,7 +30,7 @@ export class MainComponent {
 
   public firstname: string;
   public lastname: string;
-  
+
   public employees: Employee[] = [];
   public selectedEmployee: Employee = null;
   public employeeBooks: BookWrapper[] = [];
