@@ -1,15 +1,10 @@
 package com.libproject.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 
 /**
  * Created by Artur on 18.02.2018.
  */
-@Getter
-@Setter
 @Entity
 @Table(name = "employee_book")
 public class EmployeeBook {
@@ -34,4 +29,27 @@ public class EmployeeBook {
     @JoinColumn(name = "book_id", nullable = false)
     private Book book;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
 }

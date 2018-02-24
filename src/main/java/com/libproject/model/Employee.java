@@ -1,15 +1,10 @@
 package com.libproject.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 
 /**
  * Created by Artur on 18.02.2018.
  */
-@Getter
-@Setter
 @Entity
 @Table(name = "employee")
 public class Employee {
@@ -32,4 +27,27 @@ public class Employee {
     @Column(name = "lastname")
     private String lastname;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
 }
