@@ -8,15 +8,18 @@ import { AuthService } from '../core/auth.service';
 })
 export class LoginComponent {
 
+    public loginValue: string;
+    public passwordValue: string;
+
     constructor(
         private authService: AuthService
     ) {}
 
-    public login(): void {
-        this.authService.login('a', 'b');
+    public login(loginValue, passwordValue): void {
+        this.authService.login(loginValue, passwordValue);
     }
 
-    public reg(): void {
-        this.authService.reg('a', 'b');
+    public reg(loginValue, passwordValue): void {
+        this.authService.reg(loginValue, passwordValue);
     }
 }

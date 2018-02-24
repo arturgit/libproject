@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http, ResponseOptionsArgs, Response } from '@angular/http';
+import { Http, ResponseOptionsArgs, Response, Headers } from '@angular/http';
+import { RequestOptions } from '@angular/http/src/base_request_options';
+import { token } from './token';
 
 @Injectable()
 export class ServerHttp {
@@ -10,12 +12,18 @@ export class ServerHttp {
     ) {}
 
     public get(url: string, options?: ResponseOptionsArgs): any {
-        return this.http.get(this.baseUrl + url, options)
+        const headers = new Headers();
+        headers.append('x-auth-token', token.value);
+        return this.http.get(this.baseUrl + url, {headers: headers})
             .map((resp: Response) => resp.json());
     }
 
     public post(url: string, body: any, options?: ResponseOptionsArgs): any {
-        return this.http.post(this.baseUrl + url, body, options)
-            .map((resp: Response) => resp.json());
+        const headers = new Headers();
+        headers.append('x-auth-token', token.value);
+        return this.http.post(this.baseUrl + url, body, {headers: headers})
+            .map((resp: any) => {
+                return resp._body;
+            });
     }
 }

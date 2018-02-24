@@ -4,16 +4,11 @@ import com.libproject.security.JwtTokenHandler;
 import com.libproject.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-/**
- * Created by nydiarra on 06/05/17.
- */
+@CrossOrigin
 @RestController
 @RequestMapping("/users")
 public class UserController {

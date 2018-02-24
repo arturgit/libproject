@@ -4,6 +4,7 @@ import { Book } from '../core/book';
 import { Response } from '@angular/http/src/static_response';
 import { Employee } from '../core/employee';
 import { BookWrapper } from '../core/book-wrapper';
+import { AuthService } from '../core/auth.service';
 
 @Component({
   selector: 'app-main',
@@ -36,7 +37,8 @@ export class MainComponent {
   public employeeBooks: BookWrapper[] = [];
 
   constructor(
-    private serverHttp: ServerHttp
+    private serverHttp: ServerHttp,
+    private authService: AuthService
   ) {}
 
   public search(): void {
@@ -104,7 +106,12 @@ export class MainComponent {
 
   public selectBook(book): void {
     this.selectedBook = book;
-    this.serverHttp.get('book/'+book.id+'/employees')
+    this.serverHttp.get('lib/book/' + book.id + '/employees')
         .subscribe((empl: Employee[]) => this.bookEmployees = empl);
   }
+
+  public logout() {
+    this.authService.logout();
+  }
+
 }
